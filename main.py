@@ -1,26 +1,22 @@
 import pygame
 import os
+
 pygame.font.init()
 pygame.mixer.init()
-
-
-
-
 
 WIDTH, HEIGHT = 1400, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Galaxy Gangstars")
-
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 
-BORDER = pygame.Rect(WIDTH//2 - 5, 0, 5, HEIGHT)
+BORDER = pygame.Rect(WIDTH // 2 - 5, 0, 5, HEIGHT)
 
-HEALTH_FONT = pygame.font.SysFont("comicsans", 40)
-WINNER_FONT = pygame.font.SysFont("comicsans", 100)
+HEALTH_FONT = pygame.font.SysFont("bahnschrift", 40)
+WINNER_FONT = pygame.font.SysFont("bahnschrift", 100)
 
 FPS = 60
 VELOCITY = 5
@@ -43,9 +39,9 @@ def draw_window(yellow, green, yellow_bullets, green_bullets, yellow_health, gre
     WIN.blit(BACKGROUND, (0, 0))
     pygame.draw.rect(WIN, WHITE, BORDER)
 
-    yellow_health_text = HEALTH_FONT.render(f"HP: {yellow_health}", 1, WHITE)
-    green_health_text = HEALTH_FONT.render(f"HP: {green_health}", 1, WHITE)
-    WIN.blit(yellow_health_text, (WIDTH - 90, 10))
+    yellow_health_text = HEALTH_FONT.render(f"HP: {yellow_health}", True, WHITE)
+    green_health_text = HEALTH_FONT.render(f"HP: {green_health}", True, WHITE)
+    WIN.blit(yellow_health_text, (WIDTH - 130, 10))
     WIN.blit(green_health_text, (0 + 10, 10))
 
     WIN.blit(YELLOW_SPACESHIP_IMAGE, (yellow.x, yellow.y))
@@ -101,8 +97,8 @@ def handle_bullets(yellow_bullets, green_bullets, yellow, green):
 
 
 def draw_winner(text):
-    draw_text = WINNER_FONT.render(text, 1, WHITE)
-    WIN.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_width()/2))
+    draw_text = WINNER_FONT.render(text, True, WHITE)
+    WIN.blit(draw_text, (WIDTH / 2 - draw_text.get_width() / 2, HEIGHT / 2 - draw_text.get_width() / 2))
     pygame.display.update()
     pygame.time.delay(5000)
 
@@ -127,11 +123,11 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LCTRL and len(yellow_bullets) < MAX_BULLETS:
-                    bullet = pygame.Rect(yellow.x + yellow.width, yellow.y + yellow.height//2 - 2, 10, 5)
+                    bullet = pygame.Rect(yellow.x + yellow.width, yellow.y + yellow.height / 2 - 2, 10, 5)
                     yellow_bullets.append(bullet)
 
                 if event.key == pygame.K_RCTRL and len(green_bullets) < MAX_BULLETS:
-                    bullet = pygame.Rect(green.x, green.y + green.height //2 - 2, 10, 5)
+                    bullet = pygame.Rect(green.x, green.y + green.height / 2 - 2, 10, 5)
                     green_bullets.append(bullet)
 
             if event.type == YELLOW_HIT:
@@ -139,7 +135,6 @@ def main():
 
             if event.type == GREEN_HIT:
                 yellow_health -= 1
-
 
         winner_text = ""
 
@@ -153,9 +148,6 @@ def main():
             draw_winner(winner_text)
             break
 
-
-
-
         keys_pressed = pygame.key.get_pressed()
         handle_movement(keys_pressed, yellow, green)
 
@@ -167,4 +159,5 @@ def main():
 
 
 if __name__ == "__main__":
+    print(pygame.font.get_fonts())
     main()
